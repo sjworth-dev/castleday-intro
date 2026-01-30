@@ -40,31 +40,53 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--dark);
+            background: linear-gradient(135deg, #f7f3ed 0%, #fef6f3 100%);
             z-index: 9999;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .loader.hidden {
             opacity: 0;
             visibility: hidden;
+            transform: scale(1.1);
         }
 
         .loader-logo {
-            width: clamp(120px, 30vw, 180px);
+            width: clamp(250px, 60vw, 400px);
             opacity: 0;
-            animation: logo-fade 2s ease-in-out forwards;
+            transform: scale(0.7) rotate(-5deg);
+            animation: logo-entrance 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
-        @keyframes logo-fade {
-            0% { opacity: 0; transform: scale(0.9); }
-            30% { opacity: 1; transform: scale(1); }
-            70% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(1.05); }
+        @keyframes logo-entrance {
+            0% {
+                opacity: 0;
+                transform: scale(0.7) rotate(-5deg);
+            }
+            40% {
+                opacity: 1;
+                transform: scale(1.05) rotate(0deg);
+            }
+            60% {
+                opacity: 1;
+                transform: scale(0.98) rotate(0deg);
+            }
+            75% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+            90% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.15) rotate(0deg);
+            }
         }
 
         /* SCROLL CONTAINER */
@@ -944,11 +966,11 @@
         const scrollIndicator = document.getElementById('scroll-indicator');
         const cursorGlow = document.getElementById('cursor-glow');
 
-        // Logo fade then start experience
+        // Logo animation then start experience
         setTimeout(() => {
             loader.classList.add('hidden');
             initExperience();
-        }, 2200);
+        }, 2800);
 
         // Initialize experience
         function initExperience() {
