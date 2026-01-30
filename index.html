@@ -89,12 +89,13 @@
             }
         }
 
-        /* SCROLL CONTAINER */
+        /* SCROLL CONTAINER - TikTok style snap */
         .scroll-container {
             height: 100vh;
             overflow-y: auto;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
+            scroll-snap-type: y mandatory;
         }
 
         /* SCENE BASE */
@@ -106,46 +107,56 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
         }
 
-        /* SCENE 1 - OPENING BLACK WITH TEXT BURST */
+        /* SCENE 1 - OPENING PINK WITH DRAMATIC TEXT */
         .scene-1 {
-            background: var(--dark);
+            background: linear-gradient(135deg, #f7f3ed 0%, #fef6f3 100%);
         }
 
         .scene-1 .mega-text {
-            font-size: clamp(4rem, 25vw, 15rem);
+            font-size: clamp(3.5rem, 20vw, 12rem);
             font-weight: 300;
             font-style: italic;
-            line-height: 0.85;
+            line-height: 0.9;
             text-align: center;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .scene-1.active .mega-text {
-            opacity: 1;
-            transform: scale(1);
+            color: var(--dark);
         }
 
         .scene-1 .mega-text span {
             display: block;
             overflow: hidden;
+            perspective: 1000px;
         }
 
         .scene-1 .mega-text .word {
             display: inline-block;
-            transform: translateY(100%);
-            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            transform: translateY(120%) rotateX(-40deg);
+            transform-origin: center top;
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .scene-1.active .mega-text .word {
-            transform: translateY(0);
+            opacity: 1;
+            transform: translateY(0) rotateX(0deg);
         }
 
-        .scene-1 .mega-text .word:nth-child(2) { transition-delay: 0.15s; }
-        .scene-1 .mega-text .word:nth-child(3) { transition-delay: 0.3s; }
+        .scene-1 .mega-text .line-1 .word { transition-delay: 0.1s; }
+        .scene-1 .mega-text .line-2 .word { transition-delay: 0.3s; }
+        .scene-1 .mega-text .line-3 .word { transition-delay: 0.5s; }
+
+        /* Subtle shimmer on text */
+        .scene-1.active .mega-text .word {
+            animation: text-shimmer 3s ease-in-out 1.5s;
+        }
+
+        @keyframes text-shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
 
         /* SCENE 2 - VIDEO EXPLOSION */
         .scene-2 {
@@ -950,9 +961,9 @@
         <!-- SCENE 1: Opening -->
         <section class="scene scene-1" id="scene-0">
             <div class="mega-text">
-                <span><span class="word">Gather</span></span>
-                <span><span class="word">Your</span></span>
-                <span><span class="word">People</span></span>
+                <span class="line-1"><span class="word">Gather</span></span>
+                <span class="line-2"><span class="word">Your</span></span>
+                <span class="line-3"><span class="word">People</span></span>
             </div>
         </section>
 
