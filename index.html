@@ -33,63 +33,6 @@
             color: var(--cream);
         }
 
-        /* LOADING SCREEN */
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--coral);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .loader.hidden {
-            opacity: 0;
-            visibility: hidden;
-            transform: scale(1.1);
-        }
-
-        .loader-logo {
-            width: clamp(250px, 60vw, 400px);
-            opacity: 0;
-            transform: scale(0.7) rotate(-5deg);
-            animation: logo-entrance 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            filter: brightness(0) invert(1) sepia(0.1) saturate(0.5);
-        }
-
-        @keyframes logo-entrance {
-            0% {
-                opacity: 0;
-                transform: scale(0.7) rotate(-5deg);
-            }
-            40% {
-                opacity: 1;
-                transform: scale(1.05) rotate(0deg);
-            }
-            60% {
-                opacity: 1;
-                transform: scale(0.98) rotate(0deg);
-            }
-            75% {
-                opacity: 1;
-                transform: scale(1) rotate(0deg);
-            }
-            90% {
-                opacity: 1;
-                transform: scale(1) rotate(0deg);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(1.15) rotate(0deg);
-            }
-        }
-
         /* SCROLL CONTAINER - TikTok style snap */
         .scroll-container {
             height: 100vh;
@@ -159,7 +102,50 @@
             50% { opacity: 0.85; }
         }
 
-        /* SCENE 2 - VIDEO EXPLOSION (keep dark for video contrast) */
+        /* SCENE 2 - CONCEPT */
+        .scene-concept {
+            background: var(--dark);
+        }
+
+        .concept-text {
+            text-align: center;
+            padding: 40px;
+            max-width: 800px;
+        }
+
+        .concept-line {
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.4;
+            color: var(--cream);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+
+        .concept-line.line-2 {
+            font-size: clamp(1.8rem, 6vw, 3.5rem);
+            color: var(--gold);
+            font-weight: 400;
+        }
+
+        .concept-line.line-3 {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: var(--coral);
+            margin-top: 20px;
+        }
+
+        .scene-concept.active .concept-line {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scene-concept.active .concept-line.line-1 { transition-delay: 0.2s; }
+        .scene-concept.active .concept-line.line-2 { transition-delay: 0.5s; }
+        .scene-concept.active .concept-line.line-3 { transition-delay: 0.9s; }
+
+        /* SCENE 3 - VIDEO EXPLOSION (keep dark for video contrast) */
         .scene-2 {
             background: var(--dark);
         }
@@ -460,7 +446,7 @@
 
         /* SCENE 7 - FINAL REVEAL */
         .scene-7 {
-            background: var(--dark);
+            background: var(--coral);
         }
 
         .final-container {
@@ -469,12 +455,12 @@
         }
 
         .final-logo {
-            width: clamp(150px, 40vw, 300px);
+            width: clamp(200px, 50vw, 350px);
             margin-bottom: 40px;
             opacity: 0;
             transform: scale(0.5) rotate(-10deg);
             transition: all 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            filter: brightness(0) invert(1);
+            filter: brightness(0) invert(1) sepia(0.1) saturate(0.5);
         }
 
         .scene-7.active .final-logo {
@@ -488,6 +474,7 @@
             font-weight: 300;
             margin-bottom: 50px;
             opacity: 0;
+            color: var(--cream);
             transition: opacity 1s ease 0.8s;
         }
 
@@ -498,9 +485,9 @@
         .cta-button {
             display: inline-block;
             padding: 20px 60px;
-            background: transparent;
-            border: 2px solid var(--coral);
-            color: var(--cream);
+            background: var(--cream);
+            border: none;
+            color: var(--coral);
             font-family: 'Space Grotesk', sans-serif;
             font-size: 1rem;
             font-weight: 600;
@@ -527,7 +514,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: var(--coral);
+            background: var(--dark);
             transition: left 0.4s ease;
             z-index: -1;
         }
@@ -538,7 +525,6 @@
 
         .cta-button:hover {
             color: var(--cream);
-            border-color: var(--coral);
         }
 
         /* SCROLL INDICATOR */
@@ -926,10 +912,6 @@
     </style>
 </head>
 <body>
-    <!-- LOADING SCREEN -->
-    <div class="loader" id="loader">
-        <img src="assets/logo-full.png" alt="CastleDay" class="loader-logo">
-    </div>
 
     <!-- CURSOR GLOW -->
     <div class="cursor-glow" id="cursor-glow"></div>
@@ -948,6 +930,7 @@
         <div class="progress-dot" data-scene="6"></div>
         <div class="progress-dot" data-scene="7"></div>
         <div class="progress-dot" data-scene="8"></div>
+        <div class="progress-dot" data-scene="9"></div>
     </div>
 
     <!-- SCROLL INDICATOR -->
@@ -968,8 +951,17 @@
             </div>
         </section>
 
-        <!-- SCENE 2: Video Explosion -->
-        <section class="scene scene-2" id="scene-1">
+        <!-- SCENE 2: Concept -->
+        <section class="scene scene-concept" id="scene-1">
+            <div class="concept-text">
+                <p class="concept-line line-1">What if you had</p>
+                <p class="concept-line line-2">your own private resort</p>
+                <p class="concept-line line-3">— without sharing a single inch?</p>
+            </div>
+        </section>
+
+        <!-- SCENE 3: Video Explosion -->
+        <section class="scene scene-2" id="scene-2">
             <div class="video-container">
                 <video autoplay muted loop playsinline>
                     <source src="assets/intro-video.mp4" type="video/mp4">
@@ -978,8 +970,8 @@
             <div class="overlay-text">Your Own<br>Private Resort</div>
         </section>
 
-        <!-- SCENE 3: Split Stats -->
-        <section class="scene scene-3" id="scene-2">
+        <!-- SCENE 4: Split Stats -->
+        <section class="scene scene-3" id="scene-3">
             <div class="split-container">
                 <div class="split-left">
                     <div class="content">
@@ -992,8 +984,8 @@
             </div>
         </section>
 
-        <!-- SCENE: Living Spaces Carousel -->
-        <section class="scene scene-living" id="scene-3">
+        <!-- SCENE 5: Living Spaces Carousel -->
+        <section class="scene scene-living" id="scene-4">
             <div class="living-showcase">
                 <div class="living-text">
                     <h2>Space to gather</h2>
@@ -1022,8 +1014,8 @@
             </div>
         </section>
 
-        <!-- SCENE 4: Amenities List -->
-        <section class="scene scene-4" id="scene-4">
+        <!-- SCENE 6: Amenities List -->
+        <section class="scene scene-4" id="scene-5">
             <div class="parallax-layer layer-back"></div>
             <div class="parallax-layer layer-mid"></div>
             <div class="parallax-layer layer-front">
@@ -1039,8 +1031,8 @@
             </div>
         </section>
 
-        <!-- SCENE 5: Feature Grid -->
-        <section class="scene scene-5" id="scene-5">
+        <!-- SCENE 7: Feature Grid -->
+        <section class="scene scene-5" id="scene-6">
             <div class="feature-grid">
                 <div class="feature-cell">
                     <img src="assets/36mls.jpg" alt="Pool">
@@ -1061,8 +1053,8 @@
             </div>
         </section>
 
-        <!-- SCENE 6: Bedroom Carousel -->
-        <section class="scene scene-bedroom" id="scene-6">
+        <!-- SCENE 8: Bedroom Carousel -->
+        <section class="scene scene-bedroom" id="scene-7">
             <div class="bedroom-showcase">
                 <div class="bedroom-text">
                     <h2>Every room<br>tells a story</h2>
@@ -1088,8 +1080,8 @@
             </div>
         </section>
 
-        <!-- SCENE 7: Quote -->
-        <section class="scene scene-6" id="scene-7">
+        <!-- SCENE 9: Quote -->
+        <section class="scene scene-6" id="scene-8">
             <div class="quote-container">
                 <div class="quote-mark">"</div>
                 <p class="quote-text">Made for moments that matter. Designed for the milestones—and the slow, easy days in between.</p>
@@ -1097,8 +1089,8 @@
             </div>
         </section>
 
-        <!-- SCENE 8: Final CTA -->
-        <section class="scene scene-7" id="scene-8">
+        <!-- SCENE 10: Final CTA -->
+        <section class="scene scene-7" id="scene-9">
             <div class="final-container">
                 <img src="assets/logo-full.png" alt="CastleDay - Private Group Retreats" class="final-logo">
                 <p class="final-tagline">The royal treatment awaits</p>
@@ -1110,29 +1102,22 @@
 
     <script>
         // Elements
-        const loader = document.getElementById('loader');
         const scrollContainer = document.getElementById('scroll-container');
         const scenes = document.querySelectorAll('.scene');
         const progressDots = document.querySelectorAll('.progress-dot');
         const scrollIndicator = document.getElementById('scroll-indicator');
         const cursorGlow = document.getElementById('cursor-glow');
 
-        // Logo animation then start experience
-        setTimeout(() => {
-            loader.classList.add('hidden');
-            initExperience();
-        }, 2800);
-
-        // Initialize experience
-        function initExperience() {
+        // Start experience immediately
+        document.addEventListener('DOMContentLoaded', () => {
             createAmbientParticles();
             observeScenes();
 
-            // Activate first scene
+            // Activate first scene with slight delay for dramatic effect
             setTimeout(() => {
                 scenes[0].classList.add('active');
-            }, 300);
-        }
+            }, 100);
+        });
 
         // Create ambient particles
         function createAmbientParticles() {
@@ -1199,12 +1184,12 @@
             cursorGlow.style.display = 'none';
         }
 
-        // Parallax effect for scene 4
-        const scene4 = document.getElementById('scene-4');
-        const layerBack = scene4.querySelector('.layer-back');
+        // Parallax effect for amenities scene
+        const amenitiesScene = document.getElementById('scene-5');
+        const layerBack = amenitiesScene.querySelector('.layer-back');
 
         scrollContainer.addEventListener('scroll', () => {
-            const rect = scene4.getBoundingClientRect();
+            const rect = amenitiesScene.getBoundingClientRect();
             if (rect.top < window.innerHeight && rect.bottom > 0) {
                 const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
                 const moveY = (progress - 0.5) * 100;
@@ -1213,7 +1198,7 @@
         });
 
         // Video play on visibility
-        const videoScene = document.getElementById('scene-1');
+        const videoScene = document.getElementById('scene-2');
         const video = videoScene.querySelector('video');
 
         const videoObserver = new IntersectionObserver((entries) => {
@@ -1262,7 +1247,7 @@
         }
 
         // Start carousel when bedroom scene is visible
-        const bedroomScene = document.getElementById('scene-6');
+        const bedroomScene = document.getElementById('scene-7');
         const bedroomObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1338,7 +1323,7 @@
         }
 
         // Start living carousel when scene is visible
-        const livingScene = document.getElementById('scene-3');
+        const livingScene = document.getElementById('scene-4');
         const livingObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
