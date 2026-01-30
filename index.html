@@ -214,6 +214,41 @@
         .scene-concept.active .concept-line.line-2 { transition-delay: 3.6s; }
         .scene-concept.active .concept-line.line-3 { transition-delay: 3.9s; }
 
+        /* SCENE 2 - GATHER YOUR PEOPLE */
+        .scene-gather {
+            background: var(--cream);
+        }
+
+        .gather-text {
+            text-align: center;
+        }
+
+        .gather-line {
+            display: block;
+            font-size: clamp(3.5rem, 18vw, 12rem);
+            font-weight: 300;
+            font-style: italic;
+            line-height: 0.9;
+            color: var(--coral);
+            overflow: hidden;
+        }
+
+        .gather-line .word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .scene-gather.active .gather-line .word {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scene-gather.active .line-1 .word { transition-delay: 0.1s; }
+        .scene-gather.active .line-2 .word { transition-delay: 0.3s; }
+        .scene-gather.active .line-3 .word { transition-delay: 0.5s; }
+
         /* SCENE 3 - VIDEO EXPLOSION (keep dark for video contrast) */
         .scene-2 {
             background: var(--dark);
@@ -1005,6 +1040,7 @@
         <div class="progress-dot" data-scene="6"></div>
         <div class="progress-dot" data-scene="7"></div>
         <div class="progress-dot" data-scene="8"></div>
+        <div class="progress-dot" data-scene="9"></div>
     </div>
 
     <!-- SCROLL INDICATOR -->
@@ -1025,8 +1061,17 @@
             </div>
         </section>
 
-        <!-- SCENE 2: Video Explosion -->
-        <section class="scene scene-2" id="scene-1">
+        <!-- SCENE 2: Gather Your People -->
+        <section class="scene scene-gather" id="scene-1">
+            <div class="gather-text">
+                <span class="gather-line line-1"><span class="word">Gather</span></span>
+                <span class="gather-line line-2"><span class="word">Your</span></span>
+                <span class="gather-line line-3"><span class="word">People</span></span>
+            </div>
+        </section>
+
+        <!-- SCENE 3: Video Explosion -->
+        <section class="scene scene-2" id="scene-2">
             <div class="video-container">
                 <video autoplay muted loop playsinline>
                     <source src="assets/intro-video.mp4" type="video/mp4">
@@ -1035,8 +1080,8 @@
             <div class="overlay-text">Your Own<br>Private Resort</div>
         </section>
 
-        <!-- SCENE 3: Split Stats -->
-        <section class="scene scene-3" id="scene-2">
+        <!-- SCENE 4: Split Stats -->
+        <section class="scene scene-3" id="scene-3">
             <div class="split-container">
                 <div class="split-left">
                     <div class="content">
@@ -1049,8 +1094,8 @@
             </div>
         </section>
 
-        <!-- SCENE 4: Living Spaces Carousel -->
-        <section class="scene scene-living" id="scene-3">
+        <!-- SCENE 5: Living Spaces Carousel -->
+        <section class="scene scene-living" id="scene-4">
             <div class="living-showcase">
                 <div class="living-text">
                     <h2>Space to gather</h2>
@@ -1079,8 +1124,8 @@
             </div>
         </section>
 
-        <!-- SCENE 5: Amenities List -->
-        <section class="scene scene-4" id="scene-4">
+        <!-- SCENE 6: Amenities List -->
+        <section class="scene scene-4" id="scene-5">
             <div class="parallax-layer layer-back"></div>
             <div class="parallax-layer layer-mid"></div>
             <div class="parallax-layer layer-front">
@@ -1096,8 +1141,8 @@
             </div>
         </section>
 
-        <!-- SCENE 6: Feature Grid -->
-        <section class="scene scene-5" id="scene-5">
+        <!-- SCENE 7: Feature Grid -->
+        <section class="scene scene-5" id="scene-6">
             <div class="feature-grid">
                 <div class="feature-cell">
                     <img src="assets/36mls.jpg" alt="Pool">
@@ -1118,8 +1163,8 @@
             </div>
         </section>
 
-        <!-- SCENE 7: Bedroom Carousel -->
-        <section class="scene scene-bedroom" id="scene-6">
+        <!-- SCENE 8: Bedroom Carousel -->
+        <section class="scene scene-bedroom" id="scene-7">
             <div class="bedroom-showcase">
                 <div class="bedroom-text">
                     <h2>Every room<br>tells a story</h2>
@@ -1145,8 +1190,8 @@
             </div>
         </section>
 
-        <!-- SCENE 8: Quote -->
-        <section class="scene scene-6" id="scene-7">
+        <!-- SCENE 9: Quote -->
+        <section class="scene scene-6" id="scene-8">
             <div class="quote-container">
                 <div class="quote-mark">"</div>
                 <p class="quote-text">Made for moments that matter. Designed for the milestones—and the slow, easy days in between.</p>
@@ -1154,8 +1199,8 @@
             </div>
         </section>
 
-        <!-- SCENE 9: Final CTA -->
-        <section class="scene scene-7" id="scene-8">
+        <!-- SCENE 10: Final CTA -->
+        <section class="scene scene-7" id="scene-9">
             <div class="final-container">
                 <img src="assets/logo-full.png" alt="CastleDay - Private Group Retreats" class="final-logo">
                 <p class="final-tagline">The royal treatment awaits</p>
@@ -1257,7 +1302,7 @@
         }
 
         // Parallax effect for amenities scene
-        const amenitiesScene = document.getElementById('scene-4');
+        const amenitiesScene = document.getElementById('scene-5');
         const layerBack = amenitiesScene.querySelector('.layer-back');
 
         scrollContainer.addEventListener('scroll', () => {
@@ -1270,7 +1315,7 @@
         });
 
         // Video play on visibility
-        const videoScene = document.getElementById('scene-1');
+        const videoScene = document.getElementById('scene-2');
         const video = videoScene.querySelector('video');
 
         const videoObserver = new IntersectionObserver((entries) => {
@@ -1319,7 +1364,7 @@
         }
 
         // Start carousel when bedroom scene is visible
-        const bedroomScene = document.getElementById('scene-6');
+        const bedroomScene = document.getElementById('scene-7');
         const bedroomObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1395,7 +1440,7 @@
         }
 
         // Start living carousel when scene is visible
-        const livingScene = document.getElementById('scene-3');
+        const livingScene = document.getElementById('scene-4');
         const livingObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
